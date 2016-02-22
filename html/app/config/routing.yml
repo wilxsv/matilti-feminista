@@ -1,0 +1,7 @@
+matilti_core:
+    resource: "@MatiltiCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

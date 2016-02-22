@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Matilti Feminista | {% block title %}{% endblock %} :: </title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!-- js -->
+<script src="js/jquery.min.js"></script>
+<!-- //js -->
+<link href='//fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+{% block stylesheets %}{% endblock %}
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>	
+<body>
+<!-- header -->
+	<div class="header">	
+			<div class="logo">
+			   <a href=""><img src="images/matilti-logo.png" alt=" " class="img-responsive" /></a>
+			</div>
+			<div class="top-nav">
+				<span class="menu">Menu</span>
+				<ul class="nav">
+					<li class="active"><a class="index.html">Historia</a></li>
+					<li><a class="scroll" href="#team" data-hover="Team">Participantes</a></li>
+					<li><a class="scroll" href="#team" data-hover="Team">Equipo</a></li>
+					<li><a class="scroll" href="#services" data-hover="Services">Services</a></li>
+					<li><a class="scroll" href="#news" data-hover="News & Events">Premios</a></li>
+					<li><a class="scroll" href="#contact" data-hover="Contact">Contacto</a></li>
+				</ul>
+						<!-- script-for-menu -->
+						 <script>
+						   $( "span.menu" ).click(function() {
+							 $( "ul.nav" ).slideToggle( 300, function() {
+							 // Animation complete.
+							  });
+							 });
+						</script>
+						<!-- /script-for-menu -->
+			</div>
+			<div class="search-box">
+				<div id="sb-search" class="sb-search">
+					<form>
+						<input class="sb-search-input" placeholder="Digita las palabras a buscar..." type="search" name="search" id="search">
+						<input class="sb-search-submit" type="submit" value="">
+						<span class="sb-icon-search"> </span>
+					</form>
+				</div>
+			</div>
+					<!-- search-scripts -->
+					<script src="js/classie.js"></script>
+					<script src="js/uisearch.js"></script>
+						<script>
+							new UISearch( document.getElementById( 'sb-search' ) );
+						</script>
+					<!-- //search-scripts -->
+			<div class="clearfix"> </div>
+	</div>
+<!-- //header -->
+<!-- banner -->
+	<div class="banner">
+		<div class="container">
+			<section class="slider">
+				<div class="flexslider">
+					<ul class="slides">
+						<li>
+							<div class="banner-info">
+								<h1>eligendi optio cumque nihil impedit quo minus id </h1>
+								<p>Itaque earum rerum hic tenetur a sapiente delectus, 
+								ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis 
+								doloribus asperiores repellat.</p>
+							</div>
+						</li> 
+						<li>
+							<div class="banner-info">
+								<h1>consequatur optio cumque nihil impedit quo minus id </h1>
+								<p>Repellat earum rerum hic tenetur a sapiente delectus, 
+								ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis 
+								doloribus asperiores repellat.</p>
+							</div>
+						</li>
+						<li>
+							<div class="banner-info">
+								<h1>Asperiores optio cumque nihil impedit quo minus id </h1>
+								<p>Delectus earum rerum hic tenetur a sapiente delectus, 
+								ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis 
+								doloribus asperiores repellat.</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<!--FlexSlider-->
+				<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
+				<script defer src="js/jquery.flexslider.js"></script>
+				<script type="text/javascript">
+				$(window).load(function(){
+				  $('.flexslider').flexslider({
+					animation: "slide",
+					start: function(slider){
+					  $('body').removeClass('loading');
+					}
+				  });
+				});
+			  </script>
+		</div>
+	</div>
+<!-- //banner -->
+<!-- welcome -->
+	{% block body %}{% endblock %}
+	<div class="welcome">
+		<div class="container">
+			<h3>Welcome !</h3>
+			<div class="line">
+			</div>
+			<p class="et">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+				consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt 
+				ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+			<div class="welcome-grids">
+				<div class="col-md-6 welcome-grid">
+					<div class="welcome-grid-left">
+						<h4>magnam aliquam quaerat voluptatem</h4>
+						<p>Adipisci velit, sed quia non numquam eius modi tempora incidunt 
+							ut labore et dolore magnam aliquam quaerat voluptatem</p>
+					</div>
+					<div class="welcome-grid-right">
+						<img src="images/1.png" alt=" " class="img-responsive" />
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="col-md-6 welcome-grid">
+					<div class="welcome-grid-right aliquam">
+						<img src="images/2.png" alt=" " class="img-responsive" />
+					</div>
+					<div class="welcome-grid-left non">
+						<h4>magnam aliquam quaerat voluptatem</h4>
+						<p>Adipisci velit, sed quia non numquam eius modi tempora incidunt 
+							ut labore et dolore magnam aliquam quaerat voluptatem</p>
+					</div>
+					
+					<div class="clearfix"> </div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="welcome-grids">
+				<div class="col-md-6 welcome-grid">
+					<div class="welcome-grid-left">
+						<h4>magnam aliquam quaerat voluptatem</h4>
+						<p>Adipisci velit, sed quia non numquam eius modi tempora incidunt 
+							ut labore et dolore magnam aliquam quaerat voluptatem</p>
+					</div>
+					<div class="welcome-grid-right">
+						<img src="images/3.png" alt=" " class="img-responsive" />
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="col-md-6 welcome-grid">
+					<div class="welcome-grid-right aliquam">
+						<img src="images/4.png" alt=" " class="img-responsive" />
+					</div>
+					<div class="welcome-grid-left non">
+						<h4>magnam aliquam quaerat voluptatem</h4>
+						<p>Adipisci velit, sed quia non numquam eius modi tempora incidunt 
+							ut labore et dolore magnam aliquam quaerat voluptatem</p>
+					</div>
+					
+					<div class="clearfix"> </div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+<!-- //welcome -->
+<!-- about -->
+	<div class="about">
+		<div class="container">
+			<div class="col-md-6 people-left">
+				<h3>Why People Choose Us</h3>
+				<div class="line glob">
+				</div>
+				<ul>
+					<li>
+						<div class="numer">1
+						</div>
+						<div class="numer-right">
+							<h4><a href="#">Donec et justo tincidunt</a>
+								<span>posuere elementum ante</span></h4>
+							<p> Etiam interdum nisi ligula, ultrices molestie augue molestie nec. 
+								Phasellus at est vitae sapien vestibulum convallis ut vel lorem. 
+								Ut mollis elementum dolor eu consequat.</p>
+						</div>
+						<div class="clearfix"> </div>
+					</li>
+					<li>
+						<div class="numer">2
+						</div>
+						<div class="numer-right">
+							<h4><a href="#">Donec et justo tincidunt</a>
+								<span>posuere elementum ante</span></h4>
+							<p> Etiam interdum nisi ligula, ultrices molestie augue molestie nec. 
+								Phasellus at est vitae sapien vestibulum convallis ut vel lorem. 
+								Ut mollis elementum dolor eu consequat.</p>
+						</div>
+						<div class="clearfix"> </div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md-6 people-right">
+				<h3>We Think Globally</h3>
+				<div class="line glob">
+				</div>
+				<div class="fig-text">
+					<div class="fig-text-left">
+						<img src="images/1.jpg" alt=" " class="img-responsive" />
+					</div>
+					<div class="fig-text-right">
+						<h4>Etiam interdum nisi ligula, ultrices</h4>
+						<p>Pellentesque venenatis lorem vitae nisl scelerisque dignissim.
+							Sed tristique finibus leo, et sodales tortor venenatis id. Etiam
+							interdum nisi ligula, ultrices molestie augue molestie nec.</p>
+					</div>
+					<div class="clearfix"> </div>
+					<p>Pellentesque venenatis lorem vitae nisl scelerisque dignissim.
+						Sed tristique finibus leo, et sodales tortor venenatis id. Etiam
+						interdum nisi ligula, ultrices molestie augue molestie nec.
+						Phasellus at est vitae sapien vestibulum convallis ut vel lorem. 
+						Ut mollis elementum dolor eu consequat.</p>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<div class="about1">
+		<div class="container">
+			<div class="fig-text1">
+				<div class="col-md-6 fig-text1-right">
+					<h3>Our Advantages</h3>
+					<div class="line glob">
+					</div>
+					<ul>
+						<li><a href ="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+								Nulla in purus nibh.</a></li>
+						<li><a href ="#">Cum sociis natoque penatibus et magnis dis parturient montes, 
+								nascetur ridiculus mus.</a></li>
+						<li><a href ="#"> Maecenas tristique orci ac semNullam tortor nulla,
+								sodales quis posuere quis, tristique nec libero.</a></li>
+						<li><a href ="#">Cum sociis natoque penatibus et magnis dis parturient montes, 
+								nascetur ridiculus mus.</a></li>
+						<li><a href ="#"> Maecenas tristique orci ac semNullam tortor nulla,
+								sodales quis posuere quis, tristique nec libero.</a></li>
+					</ul>
+				</div>
+				<div class="col-md-6 fig-text1-right">
+					<h3>Our Offers</h3>
+					<div class="line glob">
+					</div>
+					<ul>
+						<li><a href ="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+								Nulla in purus nibh.</a></li>
+						<li><a href ="#">Cum sociis natoque penatibus et magnis dis parturient montes, 
+								nascetur ridiculus mus.</a></li>
+						<li><a href ="#"> Maecenas tristique orci ac semNullam tortor nulla,
+								sodales quis posuere quis, tristique nec libero.</a></li>
+						<li><a href ="#">Cum sociis natoque penatibus et magnis dis parturient montes, 
+								nascetur ridiculus mus.</a></li>
+						<li><a href ="#"> Maecenas tristique orci ac semNullam tortor nulla,
+								sodales quis posuere quis, tristique nec libero.</a></li>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+<!-- //about -->
+<!-- team -->
+	<div class="team" id="team">
+		<div class="container">
+			<h3>Meet Our Team</h3>
+			<div class="line tem">
+			</div>
+			<p class="et">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+				consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt 
+				ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+			<div class="team-grids">
+				<div class="col-md-4 team-grid">
+					<img src="images/5.png" alt=" " class="img-responsive" />
+					<h4>John Drill <span>Cheif Member</span></h4>
+					<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+						consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt 
+						ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+					<div class="team-grid-hov">
+						<ul>
+							<li><a href="#" class="twitter"></a></li>
+							<li><a href="#" class="g"></a></li>
+							<li><a href="#" class="v"></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4 team-grid">
+					<img src="images/6.png" alt=" " class="img-responsive" />
+					<h4>Andrew Micheal <span>Cheif Member</span></h4>
+					<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+						consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt 
+						ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+					<div class="team-grid-hov">
+						<ul>
+							<li><a href="#" class="twitter"></a></li>
+							<li><a href="#" class="g"></a></li>
+							<li><a href="#" class="v"></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4 team-grid">
+					<img src="images/7.png" alt=" " class="img-responsive" />
+					<h4>Laura Williums <span>Cheif Member</span></h4>
+					<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+						consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt 
+						ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+					<div class="team-grid-hov">
+						<ul>
+							<li><a href="#" class="twitter"></a></li>
+							<li><a href="#" class="g"></a></li>
+							<li><a href="#" class="v"></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+<!-- //team -->
+<!-- services -->
+	<div class="services" id="services">
+		<div class="container">
+			<h3>Our Services</h3>
+			<div class="line ser">
+			</div>
+			<p class="et">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+				consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt 
+				ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+			<div class="services-grids">
+				<div class="col-md-4 services-grid">
+					<div class="para">
+						<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+						<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+							consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt 
+							ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+					</div>
+				</div>
+				<div class="col-md-4 services-grid">
+					<div class="para">
+						<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+						<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+							consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt 
+							ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+					</div>
+				</div>
+				<div class="col-md-4 services-grid">
+					<div class="para">
+						<span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>
+						<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, 
+							consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt 
+							ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+<!-- //services -->
+<!-- news -->
+	<div class="news" id="news">
+		<div class="news-info">
+			<h3>News & Events</h3>
+			<div class="news-grids">
+				<div class="news-grid">
+					<div class="news-grid-left">
+						<p>29th <span>July</span></p>
+					</div>
+					<div class="news-grid-right">
+						<h4>qui dolorem eum fugiat quo voluptas nulla pariatur</h4>
+						<p>But who has any right to find fault with a man who chooses to 
+							enjoy a pleasure that has no annoying consequences, or one who avoids 
+							a pain that produces no resultant pleasure.</p>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="news-grid">
+					<div class="news-grid-left">
+						<p>31st <span>July</span></p>
+					</div>
+					<div class="news-grid-right">
+						<h4>qui dolorem eum fugiat quo voluptas nulla pariatur</h4>
+						<p>But who has any right to find fault with a man who chooses to 
+							enjoy a pleasure that has no annoying consequences, or one who avoids 
+							a pain that produces no resultant pleasure.</p>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="news-grid">
+					<div class="news-grid-left">
+						<p>5th <span>April</span></p>
+					</div>
+					<div class="news-grid-right">
+						<h4>qui dolorem eum fugiat quo voluptas nulla pariatur</h4>
+						<p>But who has any right to find fault with a man who chooses to 
+							enjoy a pleasure that has no annoying consequences, or one who avoids 
+							a pain that produces no resultant pleasure.</p>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- //news -->
+<!-- contact -->
+	<div class="contact" id="contact">
+		<div class="container">
+			<div class="col-md-5 contact-left">
+				<h3>Dirección</h3>
+				<p>est eligendi optio cumque nihil impedit quo minus id quod maxime
+					<span>26 56D Rescue,US</span></p>
+				<ul>
+					<li>Free Phone :+1 078 4589 2456</li>
+					<li>Telephone :+1 078 4589 2456</li>
+					<li>Fax :+1 078 4589 2456</li>
+					<li><a href="mailto:info@example.com">info@example.com</a></li>
+				</ul>
+			</div>
+			<div class="col-md-7 contact-left">
+				<h3>Formulario de contacto</h3>
+				<form>
+					<input type="text" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" required="">
+					<input type="email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
+					<input type="text" value="Telephone" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Telephone';}" required="">
+					<textarea type="text"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message...';}" required="">Message...</textarea>
+					<input type="submit" value="Submit" >
+				</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<div class="contact-bottom">
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2564.958900464012!2d36.23097800000001!3d49.993379999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4127a0f009ab9f07%3A0xa21e10f67fa29ce!2sGeorgia+Education+Center!5e0!3m2!1sen!2sin!4v1436943860334" frameborder="0" style="border:0" allowfullscreen></iframe>
+	</div>
+<!-- //contact -->
+<!-- footer -->
+	<div class="footer">
+		<div class="footer-grids">
+		  <div class="container">
+			  <div class="col-md-3 footer-grid">
+					<h4>Información</h4>
+					<ul>
+						<li><a href="#">Historia</a></li>
+						<li><a href="#">Herramientas</a></li>
+						<li><a href="#">Manual de instalación</a></li>
+					</ul>
+			  </div>
+			 <div class="col-md-3 footer-grid">
+					<h4>En la Colectiva</h4>
+				   <ul>
+						<li><a href="http://colectivafeminista.org.sv/">Sitio web</a></li>
+						<li><a href="http://colectivafeminista.org.sv/radio-de-todas.html">La Radio de Todas</a></li>
+						<li><a href="http://plataforma.colectivafeminista.org.sv/">Plataforma Feminista</a></li>
+				  </ul>
+			 </div>
+			 <div class="col-md-3 footer-grid">
+					<h4>Enlaces</h4>
+					<ul>
+						<li><a href="http://www.anacaonas.net">anacaonas.es</a></li>
+						<li><a href="http://www.apc.org/es">Asociación para el Progreso de las Comunicaciones</a></li>
+						<li><a href="https://www.takebackthetech.net/es">Dominemos la tecnología!</a></li>
+						<li><a href="http://www.genderit.org/es">Genderit.org</a></li>
+						<li><a href="http://www.e-igualdad.net">e-igualdad.net</a></li>
+					</ul>
+			 </div>
+			 <div class="col-md-3 footer-grid contact-grid">
+					<h4>Contactanos</h4>
+					<ul>
+						<li><span class="c-icon"> </span>Calle Gabriela Mistral, 224, San Salvador, El Salvador.</li>
+						<li><span class="c-icon1"> </span><a href="mailto:info.matilti@yandex.com">info.matilti@yandex.com</a></li>
+						<li><span class="c-icon2"> </span>22 26 03 56</li>
+					</ul>
+					<ul class="social-icons">
+						<li><a href="#" class="facebook"> </a></li>
+						<li><a href="#" class="p"> </a></li>
+						<li><a href="#" class="t"> </a></li>
+					</ul>
+			 </div>
+			 <div class="clearfix"></div>
+		 </div>
+		</div>
+	</div>
+	<div class="copy">
+		 <p>
+			 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+				 <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
+			</a>
+			This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+		</p>
+	</div>
+	<!--/animatedcss-->
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<!--/script-->
+<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},900);
+				});
+			});
+</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56cab20053256be7"></script>
+{% block javascripts %}{% endblock %}
+<!--script-->
+<!-- //footer -->
+</body>
+</html>
