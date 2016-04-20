@@ -1,0 +1,49 @@
+<!-- header -->
+	<div class="header">	
+			<div class="logo">
+			   <a href=""><img src="images/matilti-logo.png" alt=" " class="img-responsive" /></a>
+			</div>
+			<div class="top-nav">
+				<span class="menu">Menu</span>
+				<ul class="nav">
+					<li class="active"><a class="index.html" href="#Historia" data-hover="Historia">Historia</a></li>
+					<li><a class="scroll" href="#Historia" data-hover="Participantes">Participantes</a></li>
+					<li><a class="scroll" href="#Premios" data-hover="Premios">Premios</a></li>
+					<li><a class="scroll" href="#Funciones" data-hover="Funciones">Funciones</a></li>
+					<li><a class="scroll" href="#Equipo" data-hover="Equipo">Equipo</a></li>
+					<li><a class="scroll" href="#Eventos" data-hover="Eventos">Eventos</a></li>
+					<li><a class="scroll" href="#Contacto" data-hover="____Contacto">____Contacto</a></li>
+				</ul>
+						<!-- script-for-menu -->
+						 <script>
+						   $( "span.menu" ).click(function() {
+							 $( "ul.nav" ).slideToggle( 300, function() {
+							 // Animation complete.
+							  });
+							 });
+						</script>
+						<!-- /script-for-menu -->
+			</div>
+			<div class="search-box">
+				<div id="sb-search" class="sb-search">
+					<form>
+						<input class="sb-search-input" placeholder="Digita las palabras a buscar..." type="search" name="search" id="search">
+						<input class="sb-search-submit" type="submit" value="">
+						<span class="sb-icon-search"> </span>
+					</form>
+				</div>
+			</div>
+					<!-- search-scripts -->
+					<script src="js/classie.js"></script>
+					<script src="js/uisearch.js"></script>
+						<script>
+							new UISearch( document.getElementById( 'sb-search' ) );
+						</script>
+					<!-- //search-scripts -->
+			<div class="clearfix"> </div>
+	</div>
+<!-- //header -->
+<!-- banner -->
+	{% include '::base/banner.html.twig' %}
+<!-- //banner -->
+<!-- welcome -->

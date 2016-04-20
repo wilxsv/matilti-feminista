@@ -1,0 +1,47 @@
+	<div class="banner">
+		<div class="container">
+			<section class="slider">
+				<div class="flexslider">
+					<ul class="slides">
+						<li>
+							<div class="banner-info">
+								<h1>eligendi optio cumque nihil impedit quo minus id </h1>
+								<p>Itaque earum rerum hic tenetur a sapiente delectus, 
+								ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis 
+								doloribus asperiores repellat.</p>
+							</div>
+						</li> 
+						<li>
+							<div class="banner-info">
+								<h1>consequatur optio cumque nihil impedit quo minus id </h1>
+								<p>Repellat earum rerum hic tenetur a sapiente delectus, 
+								ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis 
+								doloribus asperiores repellat.</p>
+							</div>
+						</li>
+						<li>
+							<div class="banner-info">
+								<h1>Asperiores optio cumque nihil impedit quo minus id </h1>
+								<p>Delectus earum rerum hic tenetur a sapiente delectus, 
+								ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis 
+								doloribus asperiores repellat.</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<!--FlexSlider-->
+				<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
+				<script defer src="js/jquery.flexslider.js"></script>
+				<script type="text/javascript">
+				$(window).load(function(){
+				  $('.flexslider').flexslider({
+					animation: "slide",
+					start: function(slider){
+					  $('body').removeClass('loading');
+					}
+				  });
+				});
+			  </script>
+		</div>
+	</div>

@@ -1,0 +1,37 @@
+	<div class="contact" id="Contacto">
+		<div class="container">
+			<div class="col-md-5 contact-left">
+				<h3>Dirección</h3>
+				<p>Calle Gabriela Mistral, 224, San Salvador, El Salvador.</p>
+				<ul>
+					<li>Telefono :+503 2226 0356</li>
+					<li>Correo: <a href="mailto:info.matilti@yandex.com">info.matilti@yandex.com</a></li>
+				</ul>
+			</div>
+			<div class="col-md-7 contact-left">
+				<h3>Formulario de contacto</h3>
+				<form method="POST" class="ajaxForm" action="{{path('matilti_core_correo')}}" method="post" enctype="application/x-www-form-urlencoded">
+					<input type="text" value="Nombre" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Nombre';}" required="">
+					<input type="email" value="Correo" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Correo';}" required="">
+					<input type="text" value="Telefono" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Telefono';}" required="">
+					<textarea type="text"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Mensaje...';}" required="">Mensaje...</textarea>
+					<button>Get External Content</button>
+				</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<div class="contact-bottom">
+		<iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.openstreetmap.org/export/embed.html?bbox=-89.21249270439148%2C13.705897317057369%2C-89.200519323349%2C13.711796847547381&amp;layer=hot&amp;marker=13.708847100824915%2C-89.20650601387024" style="border: 1px solid black" allowfullscreen></iframe><br/><small><a href="http://www.openstreetmap.org/?mlat=13.70885&amp;mlon=-89.20651#map=17/13.70885/-89.20651&amp;layers=H">Ver en mapa completo</a></small>
+	</div>
+	<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $.ajax({
+         url: $(this).attr('method'),
+         success: function(result){
+            $("#div1").html(result);
+        }});
+    });
+});
+</script>

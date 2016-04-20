@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('MatiltiCoreBundle:Default:index.html.twig');
     }
+    
+    public function correoAction()
+    {
+        return $this->render('MatiltiCoreBundle:Default:correo.html.twig');
+    }
 }

@@ -1,3 +1,7 @@
 matilti_core_homepage:
     path:     /
     defaults: { _controller: MatiltiCoreBundle:Default:index }
+
+matilti_core_correo:
+    path:     /correo
+    defaults: { _controller: MatiltiCoreBundle:Default:correo }
