@@ -222,8 +222,13 @@ class EntityTypeTest extends TypeTestCase
         $field->submit('2');
     }
 
-    public function testConfigureQueryBuilderWithClosureReturningNull()
+    public function testConfigureQueryBuilderWithClosureReturningNullUseDefault()
     {
+        $entity1 = new SingleIntIdEntity(1, 'Foo');
+        $entity2 = new SingleIntIdEntity(2, 'Bar');
+
+        $this->persist(array($entity1, $entity2));
+
         $field = $this->factory->createNamed('name', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', null, array(
             'em' => 'default',
             'class' => self::SINGLE_IDENT_CLASS,
@@ -232,7 +237,7 @@ class EntityTypeTest extends TypeTestCase
             },
         ));
 
-        $this->assertEquals(array(), $field->createView()->vars['choices']);
+        $this->assertEquals(array(1 => new ChoiceView($entity1, '1', 'Foo'), 2 => new ChoiceView($entity2, '2', 'Bar')), $field->createView()->vars['choices']);
     }
 
     public function testSetDataSingleNull()
@@ -287,7 +292,7 @@ class EntityTypeTest extends TypeTestCase
         $field->submit(null);
 
         $this->assertNull($field->getData());
-        $this->assertNull($field->getViewData());
+        $this->assertSame('', $field->getViewData(), 'View data is always a string');
     }
 
     public function testSubmitSingleNonExpandedNull()
@@ -764,6 +769,83 @@ class EntityTypeTest extends TypeTestCase
         $this->assertTrue($field->isSynchronized());
         $this->assertSame($entity2, $field->getData());
         $this->assertSame('2', $field->getViewData());
+    }
+
+    public function testOverrideChoicesValues()
+    {
+        $entity1 = new SingleIntIdEntity(1, 'Foo');
+        $entity2 = new SingleIntIdEntity(2, 'Bar');
+
+        $this->persist(array($entity1, $entity2));
+
+        $field = $this->factory->createNamed('name', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', null, array(
+            'em' => 'default',
+            'class' => self::SINGLE_IDENT_CLASS,
+            'choice_label' => 'name',
+            'choice_value' => 'name',
+        ));
+
+        $field->submit('Bar');
+
+        $this->assertEquals(array('Foo' => new ChoiceView($entity1, 'Foo', 'Foo'), 'Bar' => new ChoiceView($entity2, 'Bar', 'Bar')), $field->createView()->vars['choices']);
+        $this->assertTrue($field->isSynchronized(), 'Field should be synchronized.');
+        $this->assertSame($entity2, $field->getData(), 'Entity should be loaded by custom value.');
+        $this->assertSame('Bar', $field->getViewData());
+    }
+
+    public function testOverrideChoicesValuesWithCallable()
+    {
+        $entity1 = new GroupableEntity(1, 'Foo', 'BazGroup');
+        $entity2 = new GroupableEntity(2, 'Bar', 'BooGroup');
+
+        $this->persist(array($entity1, $entity2));
+
+        $field = $this->factory->createNamed('name', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', null, array(
+            'em' => 'default',
+            'class' => self::ITEM_GROUP_CLASS,
+            'choice_label' => 'name',
+            'choice_value' => function (GroupableEntity $entity = null) {
+                if (null === $entity) {
+                    return '';
+                }
+
+                return $entity->groupName.'/'.$entity->name;
+            },
+        ));
+
+        $field->submit('BooGroup/Bar');
+
+        $this->assertEquals(array(
+            'BazGroup/Foo' => new ChoiceView($entity1, 'BazGroup/Foo', 'Foo'),
+            'BooGroup/Bar' => new ChoiceView($entity2, 'BooGroup/Bar', 'Bar'),
+            ), $field->createView()->vars['choices']);
+        $this->assertTrue($field->isSynchronized(), 'Field should be synchronized.');
+        $this->assertSame($entity2, $field->getData(), 'Entity should be loaded by custom value.');
+        $this->assertSame('BooGroup/Bar', $field->getViewData());
+    }
+
+    public function testChoicesForValuesOptimization()
+    {
+        $entity1 = new SingleIntIdEntity(1, 'Foo');
+        $entity2 = new SingleIntIdEntity(2, 'Bar');
+
+        $this->persist(array($entity1, $entity2));
+
+        $field = $this->factory->createNamed('name', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', null, array(
+            'em' => 'default',
+            'class' => self::SINGLE_IDENT_CLASS,
+            'choice_label' => 'name',
+        ));
+
+        $this->em->clear();
+
+        $field->submit(1);
+
+        $unitOfWorkIdentityMap = $this->em->getUnitOfWork()->getIdentityMap();
+        $managedEntitiesNames = array_map('strval', $unitOfWorkIdentityMap['Symfony\Bridge\Doctrine\Tests\Fixtures\SingleIntIdEntity']);
+
+        $this->assertContains((string) $entity1, $managedEntitiesNames);
+        $this->assertNotContains((string) $entity2, $managedEntitiesNames);
     }
 
     public function testGroupByChoices()
@@ -1252,7 +1334,7 @@ class EntityTypeTest extends TypeTestCase
 
     protected function createRegistryMock($name, $em)
     {
-        $registry = $this->getMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry = $this->getMockBuilder('Doctrine\Common\Persistence\ManagerRegistry')->getMock();
         $registry->expects($this->any())
             ->method('getManager')
             ->with($this->equalTo($name))

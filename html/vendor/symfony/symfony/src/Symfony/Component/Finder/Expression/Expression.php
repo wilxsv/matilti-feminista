@@ -29,7 +29,7 @@ class Expression implements ValueInterface
     /**
      * @param string $expr
      *
-     * @return Expression
+     * @return self
      */
     public static function create($expr)
     {
@@ -125,9 +125,9 @@ class Expression implements ValueInterface
     }
 
     /**
-     * @throws \LogicException
-     *
      * @return Glob
+     *
+     * @throws \LogicException
      */
     public function getGlob()
     {

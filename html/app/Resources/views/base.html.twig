@@ -18,7 +18,7 @@
 <link href='//fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 {% block stylesheets %}{% endblock %}
 <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-</head>	
+</head>
 <body>
 {% include '::base/header.html.twig' %}
 {% block body %}
@@ -28,11 +28,6 @@
  {% include '::base/premios.html.twig' %}
  <!-- funciones -->
  {% include '::base/funciones.html.twig' %}
- <!-- equipo -->
- {% include '::base/equipo.html.twig' %}
- <!-- servicio -->
- {% include '::base/servicios.html.twig' %}
- <!-- servicio -->
  {% include '::base/banner.html.twig' %}
 {% endblock %}
 <!-- news -->
@@ -50,13 +45,12 @@
 <!--/script-->
  <script type="text/javascript">
 		jQuery(document).ready(function($) {
-			$(".scroll").click(function(event){		
+			$(".scroll").click(function(event){
 				event.preventDefault();
 				$('html,body').animate({scrollTop:$(this.hash).offset().top},900);
 			});
 		});
  </script>
- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5713d0cc1dc2e2ee"></script>
 {% block javascripts %}{% endblock %}
 <!--script-->
 </body>

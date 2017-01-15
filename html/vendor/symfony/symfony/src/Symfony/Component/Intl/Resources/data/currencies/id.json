@@ -1,5 +1,5 @@
 {
-    "Version": "2.1.8.9",
+    "Version": "2.1.22.93",
     "Names": {
         "ADP": [
             "ADP",
@@ -255,7 +255,7 @@
         ],
         "CNY": [
             "CN¥",
-            "Yuan China"
+            "Yuan Tiongkok"
         ],
         "COP": [
             "COP",
@@ -379,7 +379,7 @@
         ],
         "GBP": [
             "£",
-            "Pound Sterling Inggris"
+            "Pound Inggris"
         ],
         "GEK": [
             "GEK",

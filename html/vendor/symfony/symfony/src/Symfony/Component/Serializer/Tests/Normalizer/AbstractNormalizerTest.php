@@ -5,6 +5,7 @@ namespace Symfony\Component\Serializer\Tests\Normalizer;
 use Symfony\Component\Serializer\Mapping\AttributeMetadata;
 use Symfony\Component\Serializer\Mapping\ClassMetadata;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Tests\Fixtures\AbstractNormalizerDummy;
 use Symfony\Component\Serializer\Tests\Fixtures\ProxyDummy;
@@ -28,8 +29,8 @@ class AbstractNormalizerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $loader = $this->getMock('Symfony\Component\Serializer\Mapping\Loader\LoaderChain', array(), array(array()));
-        $this->classMetadata = $this->getMock('Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory', array(), array($loader));
+        $loader = $this->getMockBuilder('Symfony\Component\Serializer\Mapping\Loader\LoaderChain')->setConstructorArgs(array(array()))->getMock();
+        $this->classMetadata = $this->getMockBuilder('Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory')->setConstructorArgs(array($loader))->getMock();
         $this->normalizer = new AbstractNormalizerDummy($this->classMetadata);
     }
 
@@ -55,10 +56,10 @@ class AbstractNormalizerTest extends \PHPUnit_Framework_TestCase
 
         $this->classMetadata->method('getMetadataFor')->willReturn($classMetadata);
 
-        $result = $this->normalizer->getAllowedAttributes('c', array('groups' => array('test')), true);
+        $result = $this->normalizer->getAllowedAttributes('c', array(AbstractNormalizer::GROUPS => array('test')), true);
         $this->assertEquals(array('a2', 'a4'), $result);
 
-        $result = $this->normalizer->getAllowedAttributes('c', array('groups' => array('other')), true);
+        $result = $this->normalizer->getAllowedAttributes('c', array(AbstractNormalizer::GROUPS => array('other')), true);
         $this->assertEquals(array('a3', 'a4'), $result);
     }
 
@@ -84,10 +85,10 @@ class AbstractNormalizerTest extends \PHPUnit_Framework_TestCase
 
         $this->classMetadata->method('getMetadataFor')->willReturn($classMetadata);
 
-        $result = $this->normalizer->getAllowedAttributes('c', array('groups' => array('test')), false);
+        $result = $this->normalizer->getAllowedAttributes('c', array(AbstractNormalizer::GROUPS => array('test')), false);
         $this->assertEquals(array($a2, $a4), $result);
 
-        $result = $this->normalizer->getAllowedAttributes('c', array('groups' => array('other')), false);
+        $result = $this->normalizer->getAllowedAttributes('c', array(AbstractNormalizer::GROUPS => array('other')), false);
         $this->assertEquals(array($a3, $a4), $result);
     }
 
@@ -95,7 +96,7 @@ class AbstractNormalizerTest extends \PHPUnit_Framework_TestCase
     {
         $proxyDummy = new ProxyDummy();
 
-        $context = array('object_to_populate' => $proxyDummy);
+        $context = array(AbstractNormalizer::OBJECT_TO_POPULATE => $proxyDummy);
 
         $normalizer = new ObjectNormalizer();
         $normalizer->denormalize(array('foo' => 'bar'), 'Symfony\Component\Serializer\Tests\Fixtures\ToBeProxyfiedDummy', null, $context);

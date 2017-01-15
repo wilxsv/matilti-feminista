@@ -13,6 +13,7 @@ namespace Symfony\Component\VarDumper\Tests\Caster;
 
 use Symfony\Component\VarDumper\Test\VarDumperTestCase;
 use Symfony\Component\VarDumper\Tests\Fixtures\GeneratorDemo;
+use Symfony\Component\VarDumper\Tests\Fixtures\NotLoadableClass;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
@@ -47,7 +48,7 @@ ReflectionClass {
     "export" => ReflectionMethod {
       +name: "export"
       +class: "ReflectionClass"
-      parameters: {
+%A    parameters: {
         $%s: ReflectionParameter {
 %A         position: 0
 %A
@@ -73,7 +74,7 @@ Closure {
     \$b: & 123
   }
   file: "%sReflectionCasterTest.php"
-  line: "63 to 63"
+  line: "64 to 64"
 }
 EOTXT
             , $var
@@ -89,7 +90,7 @@ EOTXT
 ReflectionParameter {
   +name: "arg1"
   position: 0
-  typeHint: "Symfony\Component\VarDumper\Tests\Caster\NotExistingClass"
+  typeHint: "Symfony\Component\VarDumper\Tests\Fixtures\NotLoadableClass"
   default: null
 }
 EOTXT
@@ -144,6 +145,10 @@ EOTXT
      */
     public function testGenerator()
     {
+        if (extension_loaded('xdebug')) {
+            $this->markTestSkipped('xdebug is active');
+        }
+
         $g = new GeneratorDemo();
         $g = $g->baz();
         $r = new \ReflectionGenerator($g);
@@ -207,8 +212,8 @@ array:2 [
     executing: {
       Symfony\Component\VarDumper\Tests\Fixtures\GeneratorDemo::foo(): {
         %sGeneratorDemo.php:10: """
-                  yield 1;\n
-              }\n
+              yield 1;\n
+          }\n
           \n
           """
       }
@@ -221,6 +226,6 @@ EODUMP;
     }
 }
 
-function reflectionParameterFixture(NotExistingClass $arg1 = null, $arg2)
+function reflectionParameterFixture(NotLoadableClass $arg1 = null, $arg2)
 {
 }

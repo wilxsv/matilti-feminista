@@ -18,9 +18,10 @@
     "require": {
         "php": ">=5.3.9",
         "doctrine/common": "~2.4",
-        "twig/twig": "~1.23|~2.0",
+        "twig/twig": "~1.28|~2.0",
         "psr/log": "~1.0",
-        "symfony/security-acl": "~2.7",
+        "symfony/security-acl": "~2.7|~3.0.0",
+        "symfony/polyfill-apcu": "~1.1",
         "symfony/polyfill-intl-icu": "~1.0",
         "symfony/polyfill-mbstring": "~1.0",
         "symfony/polyfill-php54": "~1.0",
@@ -83,8 +84,9 @@
         "doctrine/orm": "~2.4,>=2.4.5",
         "doctrine/doctrine-bundle": "~1.2",
         "monolog/monolog": "~1.11",
-        "ocramius/proxy-manager": "~0.4|~1.0",
-        "egulias/email-validator": "~1.2",
+        "ocramius/proxy-manager": "~0.4|~1.0|~2.0",
+        "symfony/phpunit-bridge": "~3.2",
+        "egulias/email-validator": "~1.2,>=1.2.1",
         "phpdocumentor/reflection": "^1.0.7"
     },
     "conflict": {

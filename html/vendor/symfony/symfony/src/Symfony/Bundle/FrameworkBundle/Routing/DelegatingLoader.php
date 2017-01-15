@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
  * DelegatingLoader delegates route loading to other loaders using a loader resolver.
  *
  * This implementation resolves the _controller attribute from the short notation
- * to the fully-qualified form (from a:b:c to class:method).
+ * to the fully-qualified form (from a:b:c to class::method).
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
@@ -84,20 +84,25 @@ class DelegatingLoader extends BaseDelegatingLoader
         } catch (\Exception $e) {
             $this->loading = false;
             throw $e;
+        } catch (\Throwable $e) {
+            $this->loading = false;
+            throw $e;
         }
 
         $this->loading = false;
 
         foreach ($collection->all() as $route) {
-            if ($controller = $route->getDefault('_controller')) {
-                try {
-                    $controller = $this->parser->parse($controller);
-                } catch (\Exception $e) {
-                    // unable to optimize unknown notation
-                }
-
-                $route->setDefault('_controller', $controller);
+            if (!$controller = $route->getDefault('_controller')) {
+                continue;
             }
+
+            try {
+                $controller = $this->parser->parse($controller);
+            } catch (\InvalidArgumentException $e) {
+                // unable to optimize unknown notation
+            }
+
+            $route->setDefault('_controller', $controller);
         }
 
         return $collection;

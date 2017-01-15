@@ -1,5 +1,5 @@
 {
-    "Version": "2.1.8.9",
+    "Version": "2.1.22.93",
     "Names": {
         "ADP": [
             "ADP",
@@ -347,7 +347,7 @@
         ],
         "GBP": [
             "GBP",
-            "brit font sterling"
+            "brit font"
         ],
         "GEK": [
             "GEK",
@@ -426,7 +426,7 @@
             "haiti gourde"
         ],
         "HUF": [
-            "HUF",
+            "Ft",
             "magyar forint"
         ],
         "IDR": [

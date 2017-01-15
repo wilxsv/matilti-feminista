@@ -1,5 +1,5 @@
 {
-    "Version": "2.1.8.9",
+    "Version": "2.1.23.81",
     "Names": {
         "AC": "Ascension",
         "AD": "Andorra",
@@ -36,7 +36,7 @@
         "BS": "Bahama’s",
         "BT": "Bhutan",
         "BW": "Botswana",
-        "BY": "Wit-Rusland",
+        "BY": "Belarus",
         "BZ": "Belize",
         "CA": "Canada",
         "CC": "Cocoseilanden",
@@ -126,7 +126,7 @@
         "KP": "Noord-Korea",
         "KR": "Zuid-Korea",
         "KW": "Koeweit",
-        "KY": "Caymaneilanden",
+        "KY": "Kaaimaneilanden",
         "KZ": "Kazachstan",
         "LA": "Laos",
         "LB": "Libanon",

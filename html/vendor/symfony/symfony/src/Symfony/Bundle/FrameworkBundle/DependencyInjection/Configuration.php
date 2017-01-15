@@ -99,7 +99,7 @@ class Configuration implements ConfigurationInterface
 
                         foreach ($v['templating']['packages'] as $name => $config) {
                             $v['assets']['packages'][$name] = array(
-                                'version' => (string) $config['version'],
+                                'version' => null === $config['version'] ? null : (string) $config['version'],
                                 'version_format' => $config['version_format'],
                                 'base_path' => '',
                                 'base_urls' => array_values(array_unique(array_merge($config['base_urls']['http'], $config['base_urls']['ssl']))),
@@ -139,6 +139,10 @@ class Configuration implements ConfigurationInterface
                                 }
 
                                 if (false !== strpos($v, '/')) {
+                                    if ('0.0.0.0/0' === $v) {
+                                        return false;
+                                    }
+
                                     list($v, $mask) = explode('/', $v, 2);
 
                                     if (strcmp($mask, (int) $mask) || $mask < 1 || $mask > (false !== strpos($v, ':') ? 128 : 32)) {
@@ -530,7 +534,13 @@ class Configuration implements ConfigurationInterface
                             ->prototype('array')
                                 ->fixXmlConfig('base_url')
                                 ->children()
-                                    ->scalarNode('version')->defaultNull()->end()
+                                    ->scalarNode('version')
+                                        ->defaultNull()
+                                        ->beforeNormalization()
+                                        ->ifTrue(function ($v) { return '' === $v; })
+                                        ->then(function ($v) { return; })
+                                        ->end()
+                                    ->end()
                                     ->scalarNode('version_format')->defaultValue('%%s?%%s')->end()
                                     ->arrayNode('base_urls')
                                         ->performNoDeepMerging()
@@ -589,7 +599,12 @@ class Configuration implements ConfigurationInterface
                             ->prototype('array')
                                 ->fixXmlConfig('base_url')
                                 ->children()
-                                    ->scalarNode('version')->defaultNull()->end()
+                                    ->scalarNode('version')
+                                        ->beforeNormalization()
+                                        ->ifTrue(function ($v) { return '' === $v; })
+                                        ->then(function ($v) { return; })
+                                        ->end()
+                                    ->end()
                                     ->scalarNode('version_format')->defaultNull()->end()
                                     ->scalarNode('base_path')->defaultValue('')->end()
                                     ->arrayNode('base_urls')
@@ -645,7 +660,15 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('cache')
                             ->beforeNormalization()
                                 // Can be removed in 3.0, once ApcCache support is dropped
-                                ->ifString()->then(function ($v) { return 'apc' === $v ? 'validator.mapping.cache.apc' : $v; })
+                                ->ifString()->then(function ($v) {
+                                    if ('apc' === $v) {
+                                        @trigger_error('The ability to pass "apc" as the framework.validation.cache configuration key value is deprecated since version 2.8 and will be removed in 3.0. Use the "validator.mapping.cache.doctrine.apc" service id instead.', E_USER_DEPRECATED);
+
+                                        return 'validator.mapping.cache.apc';
+                                    }
+
+                                    return $v;
+                                })
                             ->end()
                         ->end()
                         ->booleanNode('enable_annotations')->defaultFalse()->end()
@@ -685,7 +708,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('cache')->defaultValue('file')->end()
                         ->scalarNode('file_cache_dir')->defaultValue('%kernel.cache_dir%/annotations')->end()
-                        ->booleanNode('debug')->defaultValue('%kernel.debug%')->end()
+                        ->booleanNode('debug')->defaultValue($this->debug)->end()
                     ->end()
                 ->end()
             ->end()

@@ -66,10 +66,7 @@ class DelegatingEngineTest extends \PHPUnit_Framework_TestCase
      */
     public function testStreamRequiresStreamingEngine()
     {
-        $engine = $this->getEngineMock('template.php', true);
-        $engine->expects($this->never())->method('stream');
-
-        $delegatingEngine = new DelegatingEngine(array($engine));
+        $delegatingEngine = new DelegatingEngine(array(new TestEngine()));
         $delegatingEngine->stream('template.php', array('foo' => 'bar'));
     }
 
@@ -124,12 +121,12 @@ class DelegatingEngineTest extends \PHPUnit_Framework_TestCase
         $secondEngine = $this->getEngineMock('template.php', false);
 
         $delegatingEngine = new DelegatingEngine(array($firstEngine, $secondEngine));
-        $delegatingEngine->getEngine('template.php', array('foo' => 'bar'));
+        $delegatingEngine->getEngine('template.php');
     }
 
     private function getEngineMock($template, $supports)
     {
-        $engine = $this->getMock('Symfony\Component\Templating\EngineInterface');
+        $engine = $this->getMockBuilder('Symfony\Component\Templating\EngineInterface')->getMock();
 
         $engine->expects($this->once())
             ->method('supports')
@@ -154,4 +151,24 @@ class DelegatingEngineTest extends \PHPUnit_Framework_TestCase
 
 interface MyStreamingEngine extends StreamingEngineInterface, EngineInterface
 {
+}
+
+class TestEngine implements EngineInterface
+{
+    public function render($name, array $parameters = array())
+    {
+    }
+
+    public function exists($name)
+    {
+    }
+
+    public function supports($name)
+    {
+        return true;
+    }
+
+    public function stream()
+    {
+    }
 }

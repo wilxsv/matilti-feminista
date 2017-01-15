@@ -40,7 +40,7 @@ Form
 ----
 
  * In form types and extension overriding the "setDefaultOptions" of the
-   AbstractType or AbstractExtensionType has been deprecated in favor of
+   AbstractType or AbstractTypeExtension has been deprecated in favor of
    overriding the new "configureOptions" method.
 
    The method "setDefaultOptions(OptionsResolverInterface $resolver)" will
@@ -596,11 +596,11 @@ TwigBundle
 FrameworkBundle
 ---------------
 
- * The `templating.helper.assets` was refactored and returns now an object of the type
+ * The `templating.helper.assets` service was refactored and now returns an object of type
    `Symfony\Bundle\FrameworkBundle\Templating\Helper\AssetsHelper` instead of
    `Symfony\Component\Templating\Helper\CoreAssetsHelper`. You can update your class definition
    or use the `assets.packages` service instead. Using the `assets.packages` service is the recommended 
-   way. The `templating.helper.assets` service will be removed in Symfony 3.0.
+   way.
 
    Before:
 

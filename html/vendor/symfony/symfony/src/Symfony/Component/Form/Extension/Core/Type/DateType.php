@@ -83,7 +83,7 @@ class DateType extends AbstractType
                 $pattern
             );
 
-            // new \intlDateFormatter may return null instead of false in case of failure, see https://bugs.php.net/bug.php?id=66323
+            // new \IntlDateFormatter may return null instead of false in case of failure, see https://bugs.php.net/bug.php?id=66323
             if (!$formatter) {
                 throw new InvalidOptionsException(intl_get_error_message(), intl_get_error_code());
             }
@@ -183,7 +183,7 @@ class DateType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $compound = function (Options $options) {
-            return $options['widget'] !== 'single_text';
+            return 'single_text' !== $options['widget'];
         };
 
         $placeholder = $placeholderDefault = function (Options $options) {
@@ -191,7 +191,7 @@ class DateType extends AbstractType
         };
 
         $placeholderNormalizer = function (Options $options, $placeholder) use ($placeholderDefault) {
-            if (!is_object($options['empty_value']) || !$options['empty_value'] instanceof \Exception) {
+            if (ChoiceType::DEPRECATED_EMPTY_VALUE !== $options['empty_value']) {
                 @trigger_error('The form option "empty_value" is deprecated since version 2.6 and will be removed in 3.0. Use "placeholder" instead.', E_USER_DEPRECATED);
 
                 $placeholder = $options['empty_value'];
@@ -231,7 +231,7 @@ class DateType extends AbstractType
         };
 
         $format = function (Options $options) {
-            return $options['widget'] === 'single_text' ? DateType::HTML5_FORMAT : DateType::DEFAULT_FORMAT;
+            return 'single_text' === $options['widget'] ? DateType::HTML5_FORMAT : DateType::DEFAULT_FORMAT;
         };
 
         $resolver->setDefaults(array(
@@ -243,7 +243,7 @@ class DateType extends AbstractType
             'format' => $format,
             'model_timezone' => null,
             'view_timezone' => null,
-            'empty_value' => new \Exception(), // deprecated
+            'empty_value' => ChoiceType::DEPRECATED_EMPTY_VALUE,
             'placeholder' => $placeholder,
             'html5' => true,
             // Don't modify \DateTime classes by reference, we treat

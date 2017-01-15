@@ -1,5 +1,5 @@
 {
-    "Version": "2.1.8.9",
+    "Version": "2.1.23.79",
     "Names": {
         "ADP": [
             "ADP",
@@ -343,7 +343,7 @@
         ],
         "FKP": [
             "£FK",
-            "livre des Falkland"
+            "livre des îles Malouines"
         ],
         "FRF": [
             "F",
@@ -858,7 +858,7 @@
             "lilangeni swazi"
         ],
         "THB": [
-            "฿",
+            "THB",
             "baht thaïlandais"
         ],
         "TJR": [

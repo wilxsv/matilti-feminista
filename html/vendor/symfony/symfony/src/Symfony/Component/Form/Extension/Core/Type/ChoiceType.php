@@ -33,11 +33,17 @@ use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface as Lega
 use Symfony\Component\Form\Extension\Core\EventListener\MergeCollectionListener;
 use Symfony\Component\Form\Extension\Core\DataTransformer\ChoiceToValueTransformer;
 use Symfony\Component\Form\Extension\Core\DataTransformer\ChoicesToValuesTransformer;
+use Symfony\Component\Form\Util\FormUtil;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChoiceType extends AbstractType
 {
+    /**
+     * @internal To be removed in 3.0
+     */
+    const DEPRECATED_EMPTY_VALUE = '__deprecated_empty_value__';
+
     /**
      * Caches created choice lists.
      *
@@ -60,9 +66,7 @@ class ChoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['expanded']) {
-            $builder->setDataMapper($options['multiple']
-                ? new CheckboxListMapper($options['choice_list'])
-                : new RadioListMapper($options['choice_list']));
+            $builder->setDataMapper($options['multiple'] ? new CheckboxListMapper() : new RadioListMapper());
 
             // Initialize all choices before doing the index check below.
             // This helps in cases where index checks are optimized for non
@@ -91,6 +95,14 @@ class ChoiceType extends AbstractType
             $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $form = $event->getForm();
                 $data = $event->getData();
+
+                if (null === $data) {
+                    $emptyData = $form->getConfig()->getEmptyData();
+
+                    if (false === FormUtil::isEmpty($emptyData) && array() !== $emptyData) {
+                        $data = is_callable($emptyData) ? call_user_func($emptyData, $form, $data) : $emptyData;
+                    }
+                }
 
                 // Convert the submitted data to a string, if scalar, before
                 // casting it to an array
@@ -133,22 +145,13 @@ class ChoiceType extends AbstractType
 
                 $event->setData($data);
             });
+        }
 
-            if (!$options['multiple']) {
-                // For radio lists, transform empty arrays to null
-                // This is kind of a hack necessary because the RadioListMapper
-                // is not invoked for forms without choices
-                $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-                    if (array() === $event->getData()) {
-                        $event->setData(null);
-                    }
-                });
-            }
-        } elseif ($options['multiple']) {
-            // <select> tag with "multiple" option
+        if ($options['multiple']) {
+            // <select> tag with "multiple" option or list of checkbox inputs
             $builder->addViewTransformer(new ChoicesToValuesTransformer($options['choice_list']));
         } else {
-            // <select> tag without "multiple" option
+            // <select> tag without "multiple" option or list of radio inputs
             $builder->addViewTransformer(new ChoiceToValueTransformer($options['choice_list']));
         }
 
@@ -199,7 +202,7 @@ class ChoiceType extends AbstractType
         }
 
         // Check if the choices already contain the empty value
-        $view->vars['placeholder_in_choices'] = 0 !== count($options['choice_list']->getChoicesForValues(array('')));
+        $view->vars['placeholder_in_choices'] = $choiceListView->hasPlaceholder();
 
         // Only add the empty value option if this is not the case
         if (null !== $options['placeholder'] && !$view->vars['placeholder_in_choices']) {
@@ -247,7 +250,11 @@ class ChoiceType extends AbstractType
         $choiceListFactory = $this->choiceListFactory;
 
         $emptyData = function (Options $options) {
-            if ($options['multiple'] || $options['expanded']) {
+            if ($options['expanded'] && !$options['multiple']) {
+                return;
+            }
+
+            if ($options['multiple']) {
                 return array();
             }
 
@@ -290,6 +297,10 @@ class ChoiceType extends AbstractType
                 // variable (contrary to the $choiceLabels object shared by all
                 // forms)
                 $labels = $choiceLabels->labels;
+
+                // The $choiceLabels object is shared with the 'choices' closure.
+                // Since that normalizer can be replaced, labels have to be cleared here.
+                $choiceLabels->labels = array();
 
                 return function ($choice, $key) use ($labels) {
                     return $labels[$key];
@@ -338,14 +349,19 @@ class ChoiceType extends AbstractType
         };
 
         $placeholderNormalizer = function (Options $options, $placeholder) use ($that) {
-            if (!is_object($options['empty_value']) || !$options['empty_value'] instanceof \Exception) {
+            if ($that::DEPRECATED_EMPTY_VALUE !== $options['empty_value']) {
                 @trigger_error(sprintf('The form option "empty_value" of the "%s" form type (%s) is deprecated since version 2.6 and will be removed in 3.0. Use "placeholder" instead.', $that->getName(), __CLASS__), E_USER_DEPRECATED);
 
-                $placeholder = $options['empty_value'];
+                if (null === $placeholder || '' === $placeholder) {
+                    $placeholder = $options['empty_value'];
+                }
             }
 
             if ($options['multiple']) {
                 // never use an empty value for this case
+                return;
+            } elseif ($options['required'] && ($options['expanded'] || isset($options['attr']['size']) && $options['attr']['size'] > 1)) {
+                // placeholder for required radio buttons or a select with size > 1 does not make sense
                 return;
             } elseif (false === $placeholder) {
                 // an empty value should be added but the user decided otherwise
@@ -385,7 +401,7 @@ class ChoiceType extends AbstractType
             'preferred_choices' => array(),
             'group_by' => null,
             'empty_data' => $emptyData,
-            'empty_value' => new \Exception(), // deprecated
+            'empty_value' => self::DEPRECATED_EMPTY_VALUE,
             'placeholder' => $placeholder,
             'error_bubbling' => false,
             'compound' => $compound,
@@ -407,12 +423,12 @@ class ChoiceType extends AbstractType
         $resolver->setAllowedTypes('choice_translation_domain', array('null', 'bool', 'string'));
         $resolver->setAllowedTypes('choices_as_values', 'bool');
         $resolver->setAllowedTypes('choice_loader', array('null', 'Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface'));
-        $resolver->setAllowedTypes('choice_label', array('null', 'callable', 'string', 'Symfony\Component\PropertyAccess\PropertyPath'));
+        $resolver->setAllowedTypes('choice_label', array('null', 'bool', 'callable', 'string', 'Symfony\Component\PropertyAccess\PropertyPath'));
         $resolver->setAllowedTypes('choice_name', array('null', 'callable', 'string', 'Symfony\Component\PropertyAccess\PropertyPath'));
         $resolver->setAllowedTypes('choice_value', array('null', 'callable', 'string', 'Symfony\Component\PropertyAccess\PropertyPath'));
         $resolver->setAllowedTypes('choice_attr', array('null', 'array', 'callable', 'string', 'Symfony\Component\PropertyAccess\PropertyPath'));
         $resolver->setAllowedTypes('preferred_choices', array('array', '\Traversable', 'callable', 'string', 'Symfony\Component\PropertyAccess\PropertyPath'));
-        $resolver->setAllowedTypes('group_by', array('null', 'array', '\Traversable', 'string', 'callable', 'string', 'Symfony\Component\PropertyAccess\PropertyPath'));
+        $resolver->setAllowedTypes('group_by', array('null', 'callable', 'string', 'Symfony\Component\PropertyAccess\PropertyPath'));
     }
 
     /**
@@ -431,27 +447,12 @@ class ChoiceType extends AbstractType
         return 'choice';
     }
 
-    private static function flipRecursive($choices, &$output = array())
-    {
-        foreach ($choices as $key => $value) {
-            if (is_array($value)) {
-                $output[$key] = array();
-                self::flipRecursive($value, $output[$key]);
-                continue;
-            }
-
-            $output[$value] = $key;
-        }
-
-        return $output;
-    }
-
     /**
      * Adds the sub fields for an expanded choice field.
      *
-     * @param FormBuilderInterface $builder     The form builder.
-     * @param array                $choiceViews The choice view objects.
-     * @param array                $options     The build options.
+     * @param FormBuilderInterface $builder     The form builder
+     * @param array                $choiceViews The choice view objects
+     * @param array                $options     The build options
      */
     private function addSubForms(FormBuilderInterface $builder, array $choiceViews, array $options)
     {
@@ -503,14 +504,6 @@ class ChoiceType extends AbstractType
 
     private function createChoiceListView(ChoiceListInterface $choiceList, array $options)
     {
-        // If no explicit grouping information is given, use the structural
-        // information from the "choices" option for creating groups
-        if (!$options['group_by'] && $options['choices']) {
-            $options['group_by'] = !$options['choices_as_values']
-                ? self::flipRecursive($options['choices'])
-                : $options['choices'];
-        }
-
         return $this->choiceListFactory->createView(
             $choiceList,
             $options['preferred_choices'],
@@ -528,12 +521,12 @@ class ChoiceType extends AbstractType
      * are lost. Store them in a utility array that is used from the
      * "choice_label" closure by default.
      *
-     * @param array|\Traversable $choices      The choice labels indexed by choices.
+     * @param array|\Traversable $choices      The choice labels indexed by choices
      * @param object             $choiceLabels The object that receives the choice labels
      *                                         indexed by generated keys.
-     * @param int                $nextKey      The next generated key.
+     * @param int                $nextKey      The next generated key
      *
-     * @return array The choices in a normalized array with labels replaced by generated keys.
+     * @return array The choices in a normalized array with labels replaced by generated keys
      *
      * @internal Public only to be accessible from closures on PHP 5.3. Don't
      *           use this method as it may be removed without notice and will be in 3.0.

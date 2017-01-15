@@ -1,5 +1,5 @@
 {
-    "Version": "2.1.8.9",
+    "Version": "2.1.23.12",
     "Names": {
         "ADP": [
             "ADP",
@@ -459,7 +459,7 @@
         ],
         "HUF": [
             "HUF",
-            "Forint Hungaria"
+            "Forint Hungary"
         ],
         "IDR": [
             "IDR",
@@ -571,7 +571,7 @@
         ],
         "LSL": [
             "LSL",
-            "Đồng loti của Lesotho"
+            "Ioti Lesotho"
         ],
         "LTL": [
             "LTL",
@@ -699,7 +699,7 @@
         ],
         "MZE": [
             "MZE",
-            "Đồng Escudo Mozambique"
+            "Escudo Mozambique"
         ],
         "MZM": [
             "MZM",
@@ -855,7 +855,7 @@
         ],
         "SHP": [
             "SHP",
-            "Bảng Saint Helena"
+            "Bảng St. Helena"
         ],
         "SIT": [
             "SIT",
@@ -895,7 +895,7 @@
         ],
         "SVC": [
             "SVC",
-            "Đồng Colón Salvador"
+            "Colón El Salvador"
         ],
         "SYP": [
             "SYP",
@@ -1027,7 +1027,7 @@
         ],
         "XAF": [
             "FCFA",
-            "CFA Franc BEAC"
+            "Franc CFA Trung Phi"
         ],
         "XCD": [
             "EC$",
@@ -1047,7 +1047,7 @@
         ],
         "XOF": [
             "CFA",
-            "Franc CFA BCEAO"
+            "Franc CFA Tây Phi"
         ],
         "XPF": [
             "CFPF",

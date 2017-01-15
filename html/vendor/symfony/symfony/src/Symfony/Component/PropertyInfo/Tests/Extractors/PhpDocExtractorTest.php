@@ -24,7 +24,7 @@ class PhpDocExtractorTest extends \PHPUnit_Framework_TestCase
      */
     private $extractor;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->extractor = new PhpDocExtractor();
     }
@@ -43,7 +43,7 @@ class PhpDocExtractorTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('foo', null, 'Short description.', 'Long description.'),
-            array('bar', array(new Type(Type::BUILTIN_TYPE_STRING)), 'This is bar.', null),
+            array('bar', array(new Type(Type::BUILTIN_TYPE_STRING)), 'This is bar', null),
             array('baz', array(new Type(Type::BUILTIN_TYPE_INT)), 'Should be used.', null),
             array('foo2', array(new Type(Type::BUILTIN_TYPE_FLOAT)), null, null),
             array('foo3', array(new Type(Type::BUILTIN_TYPE_CALLABLE)), null, null),
@@ -67,6 +67,7 @@ class PhpDocExtractorTest extends \PHPUnit_Framework_TestCase
             array('d', array(new Type(Type::BUILTIN_TYPE_BOOL)), null, null),
             array('e', array(new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_RESOURCE))), null, null),
             array('f', array(new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))), null, null),
+            array('donotexist', null, null, null),
         );
     }
 }

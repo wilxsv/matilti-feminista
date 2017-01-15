@@ -49,12 +49,8 @@ class DbalLogger implements SQLLogger
             $this->stopwatch->start('doctrine', 'doctrine');
         }
 
-        if (is_array($params)) {
-            $params = $this->normalizeParams($params);
-        }
-
         if (null !== $this->logger) {
-            $this->log($sql, null === $params ? array() : $params);
+            $this->log($sql, null === $params ? array() : $this->normalizeParams($params));
         }
     }
 
@@ -99,8 +95,8 @@ class DbalLogger implements SQLLogger
             }
 
             // detect if the too long string must be shorten
-            if (self::MAX_STRING_LENGTH < iconv_strlen($params[$index], 'UTF-8')) {
-                $params[$index] = iconv_substr($params[$index], 0, self::MAX_STRING_LENGTH - 6, 'UTF-8').' [...]';
+            if (self::MAX_STRING_LENGTH < mb_strlen($params[$index], 'UTF-8')) {
+                $params[$index] = mb_substr($params[$index], 0, self::MAX_STRING_LENGTH - 6, 'UTF-8').' [...]';
                 continue;
             }
         }
